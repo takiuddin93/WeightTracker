@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weighttracker/main.dart';
-import 'package:weighttracker/models/app_users.dart';
 import 'package:weighttracker/models/user_weights.dart';
+import 'package:weighttracker/screens/home/settings_form.dart';
 import 'package:weighttracker/screens/home/weight_list.dart';
 import 'package:weighttracker/services/auth_service.dart';
 import 'package:weighttracker/services/database_service.dart';
-import 'package:weighttracker/widgets/custom_dialog_widget.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key, required this.title}) : super(key: key);
@@ -23,16 +22,13 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     Size media = MediaQuery.of(context).size;
 
-    final AuthService _authService = AuthService();
-    AppUsers appUsers = Provider.of<AppUsers>(context);
-
-    void _showSettingsPanel() {
+    void _showEditPanel() {
       showModalBottomSheet(
           context: context,
           builder: (context) {
             return Container(
               padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 60.0),
-              child: Dialog(),
+              child: EditForm(),
             );
           });
     }
@@ -63,12 +59,7 @@ class _HomeState extends State<Home> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // CustomDialog.showScaleAlertBox(
-          //     context: context,
-          //     name: 'Update',
-          //     weight: '100',
-          //     update: 'update');
-          _showSettingsPanel();
+          _showEditPanel();
         },
         tooltip: 'Add',
         child: Icon(Icons.add),
